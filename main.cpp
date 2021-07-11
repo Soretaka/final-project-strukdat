@@ -311,6 +311,7 @@ int main()
 
         default:
             cmdLogn("Terjadi suatu kesalahan");
+            run = 0;
             break;
         }
     }
