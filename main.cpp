@@ -235,10 +235,35 @@ void sunting(vector<pair<string,string>> &data){
         }
     }
     string nametmp,niptmp;
+    flag = 1;
+    while(flag){
     cmdLog("Masukkan nama pengganti: ");
     cin >> nametmp;
     cmdLog("Masukkan NIP pengganti: ");
     cin >> niptmp;
+    vector<pair<string,string>>::iterator checkDataGanti;
+    checkDataGanti = find(data.begin(),data.end(),make_pair(nametmp,niptmp));
+    if(checkDataGanti != data.end()){
+            cmdLogn("data sudah ada");
+            cmdLogn("Apakah ingin membatalkan? (1 untuk iya, 2 untuk tidak)");
+            cmdLog("pilihan: ");
+            int choice;
+            cin >> choice;
+            choice--;
+            if(choice == 1){
+                continue;
+            }else if(choice == 0){
+                system("pause");
+                return;
+            }else{
+                cmdLog("ERROR");
+                system("pause");
+                return;
+            }
+        }else{
+            flag = 0;
+        }
+    }
     data.erase(checkData);
     data.insert(checkData,make_pair(nametmp,niptmp));
     ofstream file;
@@ -281,6 +306,7 @@ int main()
         return 0;
     }
     welcomeMsg();
+    system("pause");
     bool run = 1;
     while(run){
         system("cls");
