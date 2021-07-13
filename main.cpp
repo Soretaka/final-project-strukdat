@@ -110,6 +110,8 @@ void tambahDaftar(vector<pair<string,string>> &data,vector <string> &dataNIP){
     string name,nip;
     vector<pair<string,string>>::iterator checkData;
     vector<string>::iterator checkDataNIP;
+    string x;
+    getline(cin,x);
     bool flag = 1;
     while(flag){
         cmdLog("Masukkan nama: ");
