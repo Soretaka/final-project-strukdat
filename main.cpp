@@ -113,9 +113,9 @@ void tambahDaftar(vector<pair<string,string>> &data,vector <string> &dataNIP){
     bool flag = 1;
     while(flag){
         cmdLog("Masukkan nama: ");
-        cin >> name;
+        getline(cin,name);
         cmdLog("Masukkan NIP: ");
-        cin >> nip;
+        getline(cin,nip);
         checkData = find(data.begin(),data.end(),make_pair(name,nip));
         checkDataNIP = find(dataNIP.begin(),dataNIP.end(),nip);
         if((checkData != data.end() || checkDataNIP != dataNIP.end())){
@@ -175,9 +175,9 @@ void hapusDaftar(vector<pair<string,string>> &data,vector <string> &dataNIP){
     vector<string>::iterator checkDataNIP;
     while(flag){
         cmdLog("Masukkan nama: ");
-        cin >> name;
+        getline(cin,name);
         cmdLog("Masukkan NIP: ");
-        cin >> nip;
+        getline(cin,nip);
         checkData = find(data.begin(),data.end(),make_pair(name,nip));
         checkDataNIP = find(dataNIP.begin(),dataNIP.end(),nip);
         if(checkData == data.end()){
@@ -229,9 +229,9 @@ void sunting(vector<pair<string,string>> &data,vector <string> &dataNIP){
     vector<string>::iterator checkDataNIP;
     while(flag){
         cmdLog("Masukkan nama: ");
-        cin >> name;
+        getline(cin,name);
         cmdLog("Masukkan NIP: ");
-        cin >> nip;
+        getline(cin,nip);
         checkData = find(data.begin(),data.end(),make_pair(name,nip));
         checkDataNIP = find(dataNIP.begin(),dataNIP.end(),nip);
         if(checkData == data.end()){
@@ -260,9 +260,9 @@ void sunting(vector<pair<string,string>> &data,vector <string> &dataNIP){
     vector<string>::iterator checkDataGantiNIP;
     while(flag){
         cmdLog("Masukkan nama pengganti: ");
-        cin >> nametmp;
+        getline(cin,nametmp);
         cmdLog("Masukkan NIP pengganti: ");
-        cin >> niptmp;
+        getline(cin,niptmp);
         vector<pair<string,string>>::iterator checkDataGanti;
         checkDataGanti = find(data.begin(),data.end(),make_pair(nametmp,niptmp));
             checkDataGantiNIP = find(dataNIP.begin(),dataNIP.end(),niptmp);
