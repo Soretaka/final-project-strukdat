@@ -16,12 +16,14 @@ void cmdLog(const char *msg)
 
 void welcomeMsg()
 {
+    cmdLogn("\nNama : Anak Agung Yatestha Parwata");
+    cmdLogn("NRP  : 5025201234");
     cmdLogn("Selamat datang di mesin pengelola nomor NIP pegawai!");
 } 
 
 void printTableLine()
 {
-     cmdLogn("--------------------------------------------------------");
+     cmdLogn("--------------------------------------------------------\n");
 }
 
 void Menu()
@@ -61,6 +63,7 @@ bool sortbyfid(const pair<string,string> &a,const pair<string,string> &b)
 {
     return (a.first >b.first);
 }
+
 
 void printDaftar(vector<pair<string,string>> data)
 {
@@ -103,9 +106,10 @@ void printDaftar(vector<pair<string,string>> data)
      system("pause");
 }
 
-void tambahDaftar(vector<pair<string,string>> &data){
+void tambahDaftar(vector<pair<string,string>> &data,vector <string> &dataNIP){
     string name,nip;
     vector<pair<string,string>>::iterator checkData;
+    vector<string>::iterator checkDataNIP;
     bool flag = 1;
     while(flag){
         cmdLog("Masukkan nama: ");
@@ -113,8 +117,19 @@ void tambahDaftar(vector<pair<string,string>> &data){
         cmdLog("Masukkan NIP: ");
         cin >> nip;
         checkData = find(data.begin(),data.end(),make_pair(name,nip));
-        if(checkData != data.end()){
-            cmdLogn("data sudah ada");
+        checkDataNIP = find(dataNIP.begin(),dataNIP.end(),nip);
+        if((checkData != data.end() || checkDataNIP != dataNIP.end())){
+            if(checkData != data.end()){
+                cmdLog("data dengan nama ");
+                cout << name;
+                cmdLog(" NIP ");
+                cout << nip;
+                cmdLogn(" sudah ada ");
+            }else if (checkDataNIP != dataNIP.end()){
+                cmdLog("data dengan NIP ");
+                cout << nip;
+                cmdLogn(" sudah ada ");
+            }
             cmdLogn("Apakah ingin membatalkan? (1 untuk iya, 2 untuk tidak)");
             cmdLog("pilihan: ");
             int choice;
@@ -140,6 +155,7 @@ void tambahDaftar(vector<pair<string,string>> &data){
     cout << nip;
     cmdLogn("");
     data.pb(make_pair(name,nip));
+    dataNIP.pb(nip);
     ofstream file;
     file.open("nip.txt",std::ios_base::app);
     if(file.is_open()){
@@ -152,16 +168,18 @@ void tambahDaftar(vector<pair<string,string>> &data){
     system("pause");
 }
 
-void hapusDaftar(vector<pair<string,string>> &data){
+void hapusDaftar(vector<pair<string,string>> &data,vector <string> &dataNIP){
     string name,nip;
     bool flag = 1;
     vector<pair<string,string>>::iterator checkData;
+    vector<string>::iterator checkDataNIP;
     while(flag){
         cmdLog("Masukkan nama: ");
         cin >> name;
         cmdLog("Masukkan NIP: ");
         cin >> nip;
         checkData = find(data.begin(),data.end(),make_pair(name,nip));
+        checkDataNIP = find(dataNIP.begin(),dataNIP.end(),nip);
         if(checkData == data.end()){
             cmdLogn("data tidak ada");
             cmdLogn("Apakah ingin membatalkan? (1 untuk iya, 2 untuk tidak)");
@@ -189,6 +207,7 @@ void hapusDaftar(vector<pair<string,string>> &data){
     cout << nip;
     cmdLogn("");
     data.erase(checkData);
+    dataNIP.erase(checkDataNIP);
     ofstream file;
     file.open("nip.txt");
     if(file.is_open()){
@@ -203,16 +222,18 @@ void hapusDaftar(vector<pair<string,string>> &data){
     system("pause");
 }
 
-void sunting(vector<pair<string,string>> &data){
+void sunting(vector<pair<string,string>> &data,vector <string> &dataNIP){
     string name,nip;
     bool flag = 1;
     vector<pair<string,string>>::iterator checkData;
+    vector<string>::iterator checkDataNIP;
     while(flag){
         cmdLog("Masukkan nama: ");
         cin >> name;
         cmdLog("Masukkan NIP: ");
         cin >> nip;
         checkData = find(data.begin(),data.end(),make_pair(name,nip));
+        checkDataNIP = find(dataNIP.begin(),dataNIP.end(),nip);
         if(checkData == data.end()){
             cmdLogn("data tidak ada");
             cmdLogn("Apakah ingin membatalkan? (1 untuk iya, 2 untuk tidak)");
@@ -236,36 +257,50 @@ void sunting(vector<pair<string,string>> &data){
     }
     string nametmp,niptmp;
     flag = 1;
+    vector<string>::iterator checkDataGantiNIP;
     while(flag){
-    cmdLog("Masukkan nama pengganti: ");
-    cin >> nametmp;
-    cmdLog("Masukkan NIP pengganti: ");
-    cin >> niptmp;
-    vector<pair<string,string>>::iterator checkDataGanti;
-    checkDataGanti = find(data.begin(),data.end(),make_pair(nametmp,niptmp));
-    if(checkDataGanti != data.end()){
-            cmdLogn("data sudah ada");
-            cmdLogn("Apakah ingin membatalkan? (1 untuk iya, 2 untuk tidak)");
-            cmdLog("pilihan: ");
-            int choice;
-            cin >> choice;
-            choice--;
-            if(choice == 1){
-                continue;
-            }else if(choice == 0){
-                system("pause");
-                return;
+        cmdLog("Masukkan nama pengganti: ");
+        cin >> nametmp;
+        cmdLog("Masukkan NIP pengganti: ");
+        cin >> niptmp;
+        vector<pair<string,string>>::iterator checkDataGanti;
+        checkDataGanti = find(data.begin(),data.end(),make_pair(nametmp,niptmp));
+            checkDataGantiNIP = find(dataNIP.begin(),dataNIP.end(),niptmp);
+            if((checkDataGanti != data.end() || checkDataGantiNIP != dataNIP.end())){
+                if(checkDataGanti != data.end()){
+                    cmdLog("data dengan nama ");
+                    cout << nametmp;
+                    cmdLog(" NIP ");
+                    cout << niptmp;
+                    cmdLogn(" sudah ada ");
+                }else if (checkDataGantiNIP != dataNIP.end()){
+                    cmdLog("data dengan NIP ");
+                    cout << niptmp;
+                    cmdLogn(" sudah ada ");
+                }
+                cmdLogn("Apakah ingin membatalkan? (1 untuk iya, 2 untuk tidak)");
+                cmdLog("pilihan: ");
+                int choice;
+                cin >> choice;
+                choice--;
+                if(choice == 1){
+                    continue;
+                }else if(choice == 0){
+                    system("pause");
+                    return;
+                }else{
+                    cmdLog("ERROR");
+                    system("pause");
+                    return;
+                }
             }else{
-                cmdLog("ERROR");
-                system("pause");
-                return;
+                flag = 0;
             }
-        }else{
-            flag = 0;
-        }
     }
     data.erase(checkData);
     data.insert(checkData,make_pair(nametmp,niptmp));
+    dataNIP.erase(checkDataNIP);
+    dataNIP.pb(niptmp);
     ofstream file;
     file.open("nip.txt");
     if(file.is_open()){
@@ -286,6 +321,7 @@ int main()
     ifstream file;
     file.open("nip.txt");
     vector <pair<string,string>> data;
+    vector <string> dataNIP;
     if(file.is_open()){
         string name;
         string nip;
@@ -295,8 +331,9 @@ int main()
             if(counter%2 == 0){
                 name = tmp;
             }else{
-                nip = tmp;
+                nip = tmp; 
                 data.pb(mpair(name,nip));
+                dataNIP.pb(nip);
             }
             counter++;
         }
@@ -319,15 +356,15 @@ int main()
             break;
 
         case 2:
-            tambahDaftar(data);
+            tambahDaftar(data,dataNIP);
             break;
 
         case 3:
-            hapusDaftar(data);
+            hapusDaftar(data,dataNIP);
             break;
 
         case 4:
-            sunting(data);
+            sunting(data,dataNIP);
             break;
 
         case 5:
