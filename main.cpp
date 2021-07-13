@@ -176,6 +176,8 @@ void hapusDaftar(vector<pair<string,string>> &data,vector <string> &dataNIP){
     vector<pair<string,string>>::iterator checkData;
     vector<string>::iterator checkDataNIP;
     while(flag){
+            string x;
+            getline(cin,x);
         cmdLog("Masukkan nama: ");
         getline(cin,name);
         cmdLog("Masukkan NIP: ");
@@ -228,8 +230,10 @@ void sunting(vector<pair<string,string>> &data,vector <string> &dataNIP){
     string name,nip;
     bool flag = 1;
     vector<pair<string,string>>::iterator checkData;
-    vector<string>::iterator checkDataNIP;
+    vector<string>::iterator checkDataNIP;    
     while(flag){
+        string x;
+        getline(cin,x);
         cmdLog("Masukkan nama: ");
         getline(cin,name);
         cmdLog("Masukkan NIP: ");
